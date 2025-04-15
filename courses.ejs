@@ -1,0 +1,76 @@
+<h2>Nos Cours</h2>
+<p>Découvrez notre sélection de cours d'intelligence artificielle.</p>
+
+<div class="filter-controls">
+  <div class="filter-group">
+    <label for="level-filter">Filtrer par niveau:</label>
+    <select id="level-filter">
+      <option value="all">Tous les niveaux</option>
+      <option value="Débutant">Débutant</option>
+      <option value="Intermédiaire">Intermédiaire</option>
+      <option value="Avancé">Avancé</option>
+    </select>
+  </div>
+  
+  <div class="filter-group">
+    <label for="price-filter">Filtrer par prix:</label>
+    <select id="price-filter">
+      <option value="all">Tous les prix</option>
+      <option value="low">Moins de 200€</option>
+      <option value="medium">200€ - 300€</option>
+      <option value="high">Plus de 300€</option>
+    </select>
+  </div>
+</div>
+
+<div class="courses-container" id="courses-container">
+  <% courses.forEach(course => { %>
+    <div class="course-card" data-level="<%= course.level %>" data-price="<%= course.price %>">
+      <h3><%= course.title %></h3>
+      <p><%= course.description %></p>
+      <div class="course-details">
+        <span class="price"><%= course.price %> €</span>
+        <span class="level"><%= course.level %></span>
+      </div>
+      <a href="/contact" class="btn">S'inscrire</a>
+    </div>
+  <% }); %>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const levelFilter = document.getElementById('level-filter');
+    const priceFilter = document.getElementById('price-filter');
+    const courseCards = document.querySelectorAll('.course-card');
+    
+    function filterCourses() {
+      const selectedLevel = levelFilter.value;
+      const selectedPrice = priceFilter.value;
+      
+      courseCards.forEach(card => {
+        const cardLevel = card.getAttribute('data-level');
+        const cardPrice = parseInt(card.getAttribute('data-price'));
+        
+        let levelMatch = selectedLevel === 'all' || cardLevel === selectedLevel;
+        let priceMatch = true;
+        
+        if (selectedPrice === 'low') {
+          priceMatch = cardPrice < 200;
+        } else if (selectedPrice === 'medium') {
+          priceMatch = cardPrice >= 200 && cardPrice <= 300;
+        } else if (selectedPrice === 'high') {
+          priceMatch = cardPrice > 300;
+        }
+        
+        if (levelMatch && priceMatch) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+    
+    levelFilter.addEventListener('change', filterCourses);
+    priceFilter.addEventListener('change', filterCourses);
+  });
+</script>
