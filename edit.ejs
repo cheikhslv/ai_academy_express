@@ -1,0 +1,17 @@
+<h2>Modifier l’abonné</h2>
+<form action="/subscribers/<%= subscriber._id %>/update" method="POST">
+  <div class="form-group">
+    <label for="name">Nom complet</label>
+    <input type="text" name="name" id="name" value="<%= subscriber.name %>" required class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email" value="<%= subscriber.email %>" required class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="zipCode">Code Postal</label>
+    <input type="text" name="zipCode" id="zipCode" value="<%= subscriber.zipCode %>" required class="form-control">
+  </div>
+  <button type="submit" class="btn btn-primary">Mettre à jour</button>
+</form>
+<a href="/subscribers" class="btn btn-secondary mt-2">Annuler</a>

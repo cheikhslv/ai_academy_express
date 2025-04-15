@@ -1,19 +1,34 @@
-<section class="hero">
-    <h2>Bienvenue à AI Academy</h2>
-    <p>Découvrez nos cours sur l'intelligence artificielle et commencez votre voyage dans le monde de l'IA.</p>
-    <a href="/courses" class="btn">Voir nos cours</a>
-    </section>
-    <section class="features">
-    <div class="feature">
-    <h3>Experts du domaine</h3>
-    <p>Apprenez avec des instructeurs experts en IA et machine learning.</p>
-    </div>
-    <div class="feature">
-    <h3>Contenu à jour</h3>
-    <p>Notre contenu est régulièrement mis à jour pour suivre les dernières tendances.</p>
-    </div>
-    <div class="feature">
-    <h3>Projets pratiques</h3>
-    <p>Consolidez vos connaissances avec des projets réels et des exercices pratiques.</p>
-    </div>
-</section>
+<form method="GET" action="/subscribers">
+    <input type="text" name="name" placeholder="Nom">
+    <input type="text" name="zipCode" placeholder="Code postal">
+    <button type="submit">Rechercher</button>
+  </form>
+  
+<h2>Liste des abonnés</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Email</th>
+      <th>Code Postal</th>
+      <th>Actions</th> <!-- Ajout d'une colonne pour les actions -->
+    </tr>
+  </thead>
+  <tbody>
+    <% subscribers.forEach(subscriber => { %>
+    <tr>
+      <td><a href="/subscribers/<%= subscriber._id %>"><%= subscriber.name %></a></td>
+      <td><%= subscriber.email %></td>
+      <td><%= subscriber.zipCode %></td>
+      <td>
+        <form action="/subscribers/<%= subscriber._id %>/delete" method="POST" onsubmit="return confirm('Supprimer cet abonné ?');" style="display:inline;">
+          <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+        </form>
+        <a href="/subscribers/<%= subscriber._id %>/edit" class="btn btn-secondary btn-sm">Modifier</a>
+      </td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+
+<a href="/subscribers/new" class="btn btn-primary">Créer un nouvel abonné</a>
